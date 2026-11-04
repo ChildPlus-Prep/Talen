@@ -1,146 +1,154 @@
-# 🌈 Little Words — Owner & Family Guide
+# 🏁 Find Your Voice — Supervisor's Complete Guide
 
-A picture-and-speech learning website for a young child. **You do not need to know programming.** This repository is the control center for the public GitHub Pages website.
+A simple, colorful learning website for a young child. **No server or paid hosting is needed**: GitHub Pages hosts the static website. This project is a **modular frontend**, not separate networked microservices. Each learning page is maintained independently.
 
-## ⭐ Quick start: which file should I edit?
+## 1. Files and what to edit
 
-| I want to… | Open this file | What to change |
-|---|---|---|
-| Hide/show Bible Stories, Learn, My People, Practice, Meanings | `config.js` | Under `visibleTabs`, use `true` (show) or `false` (hide) |
-| Hide/show Food, Animals, ABCs, Spiritual Learning, etc. | `config.js` | Under `visibleCategories`, use `true` or `false` |
-| Teach numbers up to 5, then 10 | `config.js` | Change `maxNumber: 5` to `maxNumber: 10` |
-| Change learning words, order, pictures, spoken meanings | `words.js` | Edit the appropriate entry in `raw` or `pictureOverrides` |
-| Set default family names and photos | `family.js` | Edit `examplePeople` (see important limitation below) |
-| Edit Bible story titles and narrated text | `stories.js` | Edit the appropriate object in `stories` |
-| Add a photo or illustration | `images/` | Upload the image, then reference its path in the appropriate `.js` file |
-| Change the app's layout or behavior | `index.html` | Ask for AI help; avoid editing this file casually |
-
-**Current defaults:** Bible Stories and Spiritual Learning are hidden. Numbers show 1–5. Letters display A–Z and speak their letter names (not “capital A”).
-
-## ✏️ How to edit a file on GitHub (easy, no software installation)
-
-1. Sign in to GitHub and open the `little-words` repository.
-2. Click the file from the table above, such as **config.js**.
-3. Click the **pencil (Edit this file)** icon near the top right.
-4. Make the small change. **Do not remove commas, quotes, or brackets.**
-5. Click **Commit changes** and confirm the commit to the `main` branch.
-6. Open **Actions** or **Settings → Pages** to confirm publishing finished.
-7. Open the public website and refresh. If you still see the old version, try an Incognito/Private window. Browser caching can delay updates.
-
-**Example: Hide Bible Stories and Spiritual Learning**
-
-In `config.js`, use:
-
-```js
-visibleTabs: {learn:true,names:true,stories:false,practice:true,meaning:true},
+```text
+index.html                  Main website entry point — normally DO NOT edit
+site-settings.js            Turn learning pages ON or OFF for everyone
+pages/
+  family.js                 Family cards, names, spoken names, photo paths
+  food.js                   Food & Drinks words and emoji
+  alphabet.js               A–Z and alphabet illustrations
+  numbers.js                Numbers 0–5
+  colors.js                 Colors including White and Black
+  shapes.js                 Circle, Square, Triangle, Rectangle
+  clothes.js                Clothes including Glasses
+  home.js                   Household words and embedded illustrations
+  daily.js                  Everyday words and embedded illustrations
+assets/
+  app.js                    Shared speech, navigation, and on-device controls
+  styles.css                Colors, card layout, mobile design
+images/
+  family/                    ONLY shared family photos belong here
+README.md                   This guide
 ```
 
-and inside `visibleCategories`:
+**Why only one image folder?** Most learning cards already have their emoji, colored shapes, or embedded SVG illustration **inside their own page `.js` file**. They don't need separate image files. The only externally stored pictures are family photos, which your supervisor can replace over time.
+
+## 2. First-time publishing to GitHub
+
+1. Download the ZIP and **extract it** (do not upload the ZIP itself).
+2. Open your existing GitHub repository on the **Code** tab.
+3. Choose **Add file → Upload files** and upload the extracted files and folders to the **repository root** (alongside `index.html`).
+4. Commit changes. Remove any obsolete files from the previous version (`config.js`, `words.js`, `stories.js`, `sw.js`, etc.) once you've verified they're no longer needed. Keep any photos you want to retain.
+5. In **Settings → Pages**, use **Deploy from a branch**, branch **main**, folder **/(root)**.
+6. Wait for the Pages deployment to complete and refresh the website. For stale pages, try a private window and clear old site/service-worker cache if necessary.
+
+## 3. Show or hide pages for EVERY visitor
+
+Open **`site-settings.js`** in GitHub, click the pencil, and edit `true`/`false`:
 
 ```js
-'Spiritual Learning': false,
+const SITE_SETTINGS = {
+  pages: {
+    family: true,    // show family
+    food: false,     // hide food (example)
+    alphabet: true,
+    numbers: true,
+    colors: true,
+    shapes: true,
+    clothes: true,
+    home: true,
+    daily: true
+  }
+};
 ```
 
-To restore them later, change both values to `true`, then commit.
+`true` means visible, `false` means hidden. Keep at least one page enabled. Commit, wait for GitHub Pages, then refresh. **Grown-up controls** on the website can also switch pages instantly **for that browser only**. If those local settings override GitHub, click **Use published defaults**. The website can export a new `site-settings.js` for uploading to GitHub. This is not password protection; hidden content remains in the public source files.
 
-## 🧸 How to use the website with a child
+## 4. Add Mommy, Daddy, and Talen's photos
 
-1. Open the published website on a phone, tablet, or computer. Turn up the volume.
-2. Select **Learn** and a category, for example **My Family** or **Food & Drinks**.
-3. Tap a picture. The website speaks its name. Invite the child to repeat it naturally; there is no pressure to answer correctly.
-4. Use **My People** to practice recognizing family relationships and names.
-5. Use **Practice** to listen and find a matching picture, when ready.
-6. Use **Meanings** and its **🔊 Hear meaning** button for longer spoken explanations, when ready.
-7. **Bible Stories** can be enabled later in `config.js` for short listening lessons.
-
-The child does **not** need to read or spell. Browser speech voices vary by device. Tap-to-speak usually needs an initial user interaction.
-
-## 🖼️ How to add or replace pictures
-
-1. Open the GitHub repository's **images** folder.
-2. Select **Add file → Upload files**, choose a JPG, PNG, or SVG, and **Commit changes**.
-3. Note the exact filename, for example `images/dog.jpg` (capitalization matters).
-4. For a vocabulary picture, open `words.js` and find `pictureOverrides`. Add or change a mapping like:
+1. In GitHub, open **`images/family/`**, choose **Add file → Upload files**.
+2. Upload images named `mommy.jpg`, `daddy.jpg`, and `talen.jpg`. Use JPG, PNG, or WebP; the extension in the code **must match** the uploaded file.
+3. Open **`pages/family.js`**. The first three entries look like:
 
 ```js
-'Animals|Dog': 'images/dog.jpg',
+const FAMILY_MEMBERS = [
+  {id:'mom', name:'Mommy', say:'Mommy', emoji:'👩', photo:'images/family/mommy.jpg'},
+  {id:'dad', name:'Daddy', say:'Daddy', emoji:'👨', photo:'images/family/daddy.jpg'},
+  {id:'me', name:'Talen', say:'Tay-len', emoji:'🧒', photo:'images/family/talen.jpg'},
+];
 ```
 
-5. Commit and reload the website. If the picture does not show, check the spelling and path.
+4. Commit. Refresh the website after publishing. **Until a photo exists**, the card displays its emoji fallback. You can leave `photo:''` to use only the emoji.
 
-**Tip:** For easy maintenance, use small, clear images with simple backgrounds and short filenames such as `dog.jpg`, `table.png`, and `grandma.jpg`.
+### Add more family members later
 
-## 👨‍👩‍👦 Family names and photos — important current behavior
-
-`family.js` contains starter cards like this:
+Upload `grandma.jpg` into `images/family/`, then add this entry **inside** `FAMILY_MEMBERS` before the closing `];`:
 
 ```js
-{role:'Mommy',name:'',emoji:'👩',image:''}
+{id:'grandma', name:'Grandma', say:'Grandma', emoji:'👵', photo:'images/family/grandma.jpg'},
 ```
 
-You can change the name and use `image:'images/mommy.jpg'`. **However, the current website also stores edits made through My People in each visitor's browser. Those local changes may override the GitHub starter cards on that device.** Changes made through the website do **not** automatically publish to other devices. To make a new GitHub default appear, a visitor may need to reset their local My People cards; this can erase their saved names/photos. Ask ChatGPT to help before resetting.
+You can add Grandpa, Uncle, Auntie, siblings, cousins, etc. Give each a unique `id` such as `grandpa` or `uncle_raj`. To change the displayed label, edit `name`; to change the spoken name, edit `say`. For example `name:'Grandma Susan', say:'Grandma'`.
 
-**Privacy:** A public GitHub repository and GitHub Pages website expose uploaded names and photos to anyone who can access the files. Get the family's permission before publishing real names or photos. For private photos, use a private sharing solution instead.
+**Privacy:** A public GitHub repository and public GitHub Pages site make uploaded family photos publicly accessible. Get permission before uploading, especially children's photos. Browser photo uploads in the Grown-ups area stay on that browser and do not sync to GitHub.
 
-## 📝 How to change words and their spoken meanings
+## 5. Edit Food, Clothes, Home, and Everyday Words
 
-Open `words.js`. The `raw` list contains entries shaped like:
+Open the matching file in **`pages/`**. Most word pages contain a simple list:
 
 ```js
-['Animals','Dog','🐶','A dog is an animal.'],
+const food = [
+  ['Milk','🥛'],
+  ['Juice','🧃'],
+  ['Water','💧'],
+  ['Candy','🍬'],
+];
 ```
 
-These mean **category, word, default symbol, spoken meaning**. You can edit an entry or ask ChatGPT to do it. Keep punctuation and category names intact. The child hears the single word on Learn; the longer explanation is available with speech in Meanings. `config.js` hides whole categories; `words.js` is where individual words are maintained.
+To add a word, add another row **before `];`**:
 
-## 📖 How to change Bible stories
+```js
+['Grapes','🍇'],
+```
 
-Open `stories.js`. Each lesson has `title`, `emoji`, and `text`. `text` is what the device reads aloud. Keep sentences short and gentle. A hidden Bible Stories tab retains its lessons, so you can turn it on later.
+To remove a word, delete its whole row. To reorder words, move the row. Keep quotes, square brackets, and commas. The speech engine automatically speaks the **first value** (`Grapes`) when the card is tapped. No recording needed.
 
-## 🤖 Copy-and-paste prompt for ChatGPT
+- `pages/clothes.js`: Shirt, Pants, Socks, Shoes, Hat, Shorts, Glasses.
+- `pages/home.js`: household words, with an embedded table illustration.
+- `pages/daily.js`: everyday words, with embedded Hello, Bye-bye, Please, Thank you, Eat illustrations.
+- For a different emoji, change the **second value**. For an embedded illustration, the corresponding page contains an `*_ART` mapping; ask ChatGPT to replace it rather than manually editing its long encoded string.
 
-Upload the **latest complete website ZIP** (or the relevant `.js` files) to ChatGPT, then paste:
+## 6. Alphabet pronunciation
 
-> I manage a toddler learning website called **Little Words** on GitHub Pages. I am not a programmer. Please edit the attached website files for me.
->
-> **My requested changes:** [Describe what to add, remove, hide, rename, or replace. Attach any new photos.]
->
-> Please preserve everything else: existing words, category order, Bible stories, family names, pictures, audio behavior, and tab visibility. Keep the site friendly for a 2–3-year-old. Make changes in `config.js`, `words.js`, `family.js`, or `stories.js` where possible. Check the JavaScript syntax and that image paths and labels match. Do not claim to have tested audio on my device. Return a complete ZIP with the correct GitHub Pages folder structure, and tell me exactly which files to upload and how to commit them. Explain any privacy risks if I include names or photos. Do not silently replace existing family information.
+`pages/alphabet.js` controls which letters and illustrative emoji appear. `assets/app.js` has a `letterSounds` mapping for spoken letter names. The card displays **A**, but the speech engine receives **`ay`**. Example:
 
-**Example requests to ChatGPT:**
+```js
+const letterSounds = {A:'ay', B:'bee', C:'see', /* ... */ Z:'zee'};
+```
 
-- “Hide Bible Stories and Spiritual Learning; keep the lessons saved for later.”
-- “Show numbers 1 through 10, but keep alphabet cards in uppercase and say only the letter.”
-- “Put Dog, Cat, Fish, and Bird first and hide the other animal words.”
-- “Replace the picture for Table with the photo I attached.”
-- “Change the meaning of Apple to a short sentence that can be spoken aloud.”
+Browser voices vary, so **test A, H, I, R, W, and Z** on the actual device. If a letter sounds wrong, edit its spoken value in `assets/app.js`, or use a recorded audio approach for fully consistent pronunciation. Do not change uppercase display letters to lowercase just to fix speech.
 
-**If ChatGPT gives you an updated ZIP:** download it, extract it, upload the changed files (not the ZIP) to GitHub, commit, and check the website. Keep a backup of the previous version before replacing files.
+## 7. Numbers, Colors, Shapes
 
-## 📤 First-time publishing to GitHub Pages
+- **Numbers:** `pages/numbers.js` currently renders 0–5. To extend the list, change `[0,1,2,3,4,5]` and check that the counting-dot layout still fits.
+- **Colors:** `pages/colors.js` has `['Blue','#2879f7']` pairs. Add another color name and CSS color value in the same format.
+- **Shapes:** `pages/shapes.js` has `['Circle','circle']` pairs. New shape types also require matching CSS in `assets/styles.css`; ask ChatGPT if unsure.
 
-1. Create a **public** GitHub repository named `little-words` under the website owner's account.
-2. Extract the website ZIP and upload **all files at the repository root**, including the `images/` folder. `index.html` must be at the root.
-3. Open **Settings → Pages**. Select **Deploy from a branch**, branch **main**, folder **/ (root)**, then **Save**.
-4. After deployment, visit `https://YOUR-USERNAME.github.io/little-words/` and share that URL.
+## 8. How to use the website with the child
 
-## 🔒 What GitHub controls — and what it does not
+Open the website on a phone, tablet, or computer. Choose a page tab. Tap a large card to hear its word or letter. Family photos and labels can be customized. Use **⚙️ Grown-up controls** to show or hide pages locally. To make the changes apply to **everyone**, update the repository files and commit. The website uses the device's browser speech voices; sound must be enabled.
 
-- GitHub controls the **published defaults** and is the source for public website updates.
-- Visitors cannot commit to the repository unless the owner grants them GitHub write access.
-- Hiding a tab is **not** a security feature. Hidden content remains in publicly accessible code.
-- There is no secure private admin login, cloud database, or automatic synchronization of visitor edits.
-- The website's browser storage and cached files may differ across devices. Do not rely on them as a backup.
-- `allowVisitorEditing: false` is intended to hide the public Grown-ups editing interface; it is not authentication.
+## 9. What happens after editing GitHub?
 
-## 🛠️ If a change does not appear
+**GitHub Pages is static.** It doesn't automatically push changes into an already-open browser tab. After committing, wait for deployment and **refresh** the site. On devices with saved local settings, click **Use published defaults** to pick up GitHub visibility changes. Browser-local photos and names can override published values on that one device.
 
-1. Confirm the commit is visible in the correct GitHub repository and branch.
-2. Check **Actions** for a successful GitHub Pages deployment.
-3. Open the published `config.js` URL directly (e.g. `https://YOUR-USERNAME.github.io/little-words/config.js`) to see which values are being served.
-4. Try a Private/Incognito window. If that works, the regular browser likely has stale cache or local data.
-5. Avoid clearing browser storage until you've backed up local family names and photos.
-6. If still stuck, upload a screenshot, the latest ZIP, and the GitHub Pages URL to ChatGPT and ask it to diagnose the issue.
+## 10. Copy-and-paste ChatGPT prompt
 
----
+> I manage a toddler learning website called Find Your Voice, hosted on GitHub Pages. I am not a programmer. I attached my latest complete ZIP. Please make these changes: **[WRITE CHANGES HERE]**. Keep the project modular: each learning page must remain in its own `pages/*.js` file. Keep all shared family photos in `images/family/`; keep illustrations and word lists for all other pages inside their own page JavaScript files. Preserve existing content, page ON/OFF controls, names, and pronunciation unless I request changes. Make the changes for me, check JavaScript syntax, provide a complete updated ZIP and simple GitHub upload instructions. Update this README when needed. Do not expose private photos or add unrelated categories.
 
-**Owner's checklist before sharing:** correct words and pictures • intended tabs visible • audio tested on the child's device • no private photos/names published without consent.
+## 11. Troubleshooting
+
+- **Photo missing:** check filename, extension, exact capitalization, and the `photo` path in `pages/family.js`. The emoji should appear as a fallback.
+- **New word missing:** confirm you edited the correct `pages/*.js` file and committed it.
+- **Page hidden:** check `site-settings.js` and reset local page overrides under Grown-up controls.
+- **Old website showing:** wait for deployment, refresh, and clear old site cache if needed.
+- **Speech sounds wrong:** test a different browser voice or edit spoken text; pronunciation varies by device.
+- **Broken page:** check commas/brackets in the edited JS file. Revert the last commit if necessary.
+
+
+### Numbers page
+Edit `pages/numbers.js` and change `NUMBER_LESSONS = [0, 1, 2, 3, 4, 5]` to control which numbers appear. The numbers are displayed with counting dots and read aloud when tapped. No image upload is needed.
