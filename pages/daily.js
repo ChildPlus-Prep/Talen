@@ -9,7 +9,7 @@ const DAILY_ART = {
   'Eat': "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MjAiIGhlaWdodD0iNDIwIiB2aWV3Qm94PSIwIDAgNDIwIDQyMCI+PHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSI0MjAiIHJ4PSIzOCIgZmlsbD0iI2ZmZjBkZiIvPjxlbGxpcHNlIGN4PSIyMTAiIGN5PSIyMzAiIHJ4PSIxMjUiIHJ5PSI3NyIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjODNiM2U5IiBzdHJva2Utd2lkdGg9IjEyIi8+PGVsbGlwc2UgY3g9IjIxMCIgY3k9IjIzMCIgcng9IjY1IiByeT0iNDAiIGZpbGw9IiNlZmI1NWIiLz48cGF0aCBkPSJNMTIwIDg2IEwxMjAgMTUwIE0xMzggODYgTDEzOCAxNTAgTTE1NiA4NiBMMTU2IDE1MCBNMTM4IDE1MCBMMTM4IDIwNCBNMjk0IDg2IFEzMzcgMTM3IDI5OCAxNzcgTDI5OCAyMDciIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcxODE4ZiIgc3Ryb2tlLXdpZHRoPSIxMSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHRleHQgeD0iMjEwIiB5PSIzNzciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjM0IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzI1M2Q3MyI+RUFUPC90ZXh0Pjwvc3ZnPg==",
 };
 // Edit this page’s words and illustrations here.
-const daily=[['Hello','👋'],['Bye-bye','👋'],['Please','🙏'],['Thank you','🤝'],['Yes','👍'],['No','🙅'],['Help','🆘'],['More','➕'],['Stop','🛑'],['All done','✅'],['Eat','🥄'],['Drink','🥤'],['Sleep','😴'],['Wash','🧼'],['Come','🚶'],['Go','➡️']];
+const daily=[['Hello','👋'],['Bye-bye','👋'],['Please','🙏'],['Thank you','🤝'],['Yes','👍'],['No','👎'],['Help','🆘'],['More','➕'],['Stop','🫷'],['All done','✅'],['Eat','🍴'],['Drink','🥤'],['Sleep','😴'],['Wash','🧼'],['Come','🚶'],['Go','➡️']];
 
 function render_daily(){
 daily.forEach(([label,emoji],i)=>{const pic=DAILY_ART[label] || "";tile(label,pic||emoji,label,i,pic?'image':'emoji')});
