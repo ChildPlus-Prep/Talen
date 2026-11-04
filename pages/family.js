@@ -8,9 +8,9 @@
  NOTE: Browser-specific photo/name edits can override these defaults on that device.
 */
 const FAMILY_MEMBERS = [
-  {id:'mom', name:'Mommy', say:'Mommy', emoji:'👩', photo:'images/family/mommy.jpg'},
+  {id:'mom', name:'Mommy', say:'Mommy', emoji:'👩', photo:'images/family/Smiling Woman in Lavender with Top Knot.png'},
   {id:'dad', name:'Daddy', say:'Daddy', emoji:'👨', photo:'images/family/Confident Portrait in Tommy Hilfiger Pullover.png'},
-  {id:'me', name:'Talen', say:'Tay-len', emoji:'🧒', photo:'images/family/talen.jpg'},
+  {id:'me', name:'Talen', say:'Tay-len', emoji:'🧒', photo:'images/familyCheerful Toddler Portrait by White Siding.png'},
   // EXAMPLE — remove the // and edit the details to add Grandma:
   // {id:'grandma', name:'Grandma', say:'Grandma', emoji:'👵', photo:'images/family/grandma.jpg'},
 ];
