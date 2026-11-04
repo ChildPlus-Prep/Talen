@@ -44,8 +44,8 @@ function store(k, v) {
 
 // Explicit spoken letter names to avoid "capital A".
 const letterSounds = {
-  A: 'ay', B: 'bee', C: 'see', D: 'dee',
-  E: 'ee', F: 'eff', G: 'gee', H: 'aych',
+  A: 'aay', B: 'bee', C: 'see', D: 'dee',
+  E: 'ee', F: 'ef', G: 'gee', H: 'aych',
   I: 'eye', J: 'jay', K: 'kay', L: 'ell',
   M: 'em', N: 'en', O: 'oh',
   P: 'pee', Q: 'queue', R: 'are',
