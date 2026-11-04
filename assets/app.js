@@ -174,7 +174,6 @@ function tile(label, visual, say, i, kind, fallback = '🖼️') {
     const count = Number(label);
 
     if (count === 0) {
-      dots.append(node('span', 'zero-note', 'Zero'));
     } else {
       for (let d = 0; d < count; d++) {
         dots.append(node('span', 'count-dot'));
