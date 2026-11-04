@@ -197,11 +197,11 @@ function tile(label, visual, say, i, kind, fallback = '🖼️') {
 
   b.addEventListener('click', () => voice(say || label));
 
-  cell.append(
-    b,
-    node('div', 'caption', label)
-  );
+  cell.append(b);
 
+ if (kind !== 'number'){
+    cell.append(node('div', 'caption', label));
+ }
   grid.append(cell);
 }
 
