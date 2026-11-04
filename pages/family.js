@@ -9,7 +9,7 @@
 */
 const FAMILY_MEMBERS = [
   {id:'mom', name:'Mommy', say:'Mommy', emoji:'👩', photo:'images/family/mommy.jpg'},
-  {id:'dad', name:'Daddy', say:'Daddy', emoji:'👨', photo:'images/family/daddy.jpg'},
+  {id:'dad', name:'Daddy', say:'Daddy', emoji:'👨', photo:'images/family/Confident Portrait in Tommy Hilfiger Pullover.png'},
   {id:'me', name:'Talen', say:'Tay-len', emoji:'🧒', photo:'images/family/talen.jpg'},
   // EXAMPLE — remove the // and edit the details to add Grandma:
   // {id:'grandma', name:'Grandma', say:'Grandma', emoji:'👵', photo:'images/family/grandma.jpg'},
